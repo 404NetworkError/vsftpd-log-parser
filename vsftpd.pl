@@ -63,6 +63,14 @@ while (<FH>) {
 	
 	if ( $action =~ /DOWNLOAD:/ ) {
 		$hits_by_download_for{$status}++;
+		if ( $status =~ /OK/ ) {
+			$hits_by_download_ok_addr_for{$ip}++;
+			$hits_by_download_ok_file_for{$file}++;
+		}
+		if ( $status =~ /FAIL/ ) {
+			$hits_by_download_fail_addr_for{$ip}++;
+			$hits_by_download_fail_file_for{$file}++;
+		}
 	}
 
 	#Search engines look for robots.txt
@@ -93,6 +101,10 @@ Display(\%hits_by_login_for,   'By Login Status',         $max_records);
 Display(\%hits_by_status_ok_for,   'By Status OK',         $max_records);
 Display(\%hits_by_status_fail_for,   'By Status FAIL',         $max_records);
 Display(\%hits_by_download_for,   'By Download Status',         $max_records);
+Display(\%hits_by_download_ok_addr_for,   'By Download OK IP',         $max_records);
+Display(\%hits_by_download_ok_file_for,   'By Download OK File',         $max_records);
+Display(\%hits_by_download_fail_addr_for,   'By Download FAIL IP',         $max_records);
+Display(\%hits_by_download_fail_file_for,   'By Download FAIL File',         $max_records);
 Display(\%hits_by_connect_for,  'By Connect',   $max_records);
 
 #print unparsed logs. useful for weird stuff that didn't match the regex
