@@ -1,11 +1,19 @@
-#!/bin/usr/perl/
+#!/usr/bin/perl
 #programmer: Kevin Law
 #Version: 0.5
 
 use Carp;
 my $max_records = '10'; #change for max records. 0 is no limit
- open (FH, '<', "/var/log/vsftpd.log")
-  		or die "error, Cannot open $file";
+if (($#ARGV + 1) >= 1) {
+    open (FH, '<', "$ARGV[0]")
+        or die "error, Cannot open $file";
+    if (($#ARGV + 1) >= 2) {
+        $max_records = "$ARGV[1]";
+    }
+} else {
+    open (FH, '<', "/var/log/vsftpd.log")
+  	    or die "error, Cannot open$file";
+}
 
    
 while (<FH>) {
@@ -100,3 +108,4 @@ sub Display {
         return if ( $max_records and $counter >= $max_records );
     }
 } # end of sub Display
+
